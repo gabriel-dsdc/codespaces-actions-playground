@@ -19,7 +19,8 @@ jobs:
         uses: actions/setup-node@main
         with:
           node-version-file: "package.json"
-        run: |
+
+      - run: |
           echo ${{ steps.setup-node.outputs.node-version }}
           echo ${{ steps.setup-node.outputs }}
 
