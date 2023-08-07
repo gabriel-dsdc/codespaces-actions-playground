@@ -1,36 +1,47 @@
 name: Deploy on push
-
 on:
   push:
     branches: [main]
   pull_request:
     branches: [main]
+runs-on: ubuntu-latest
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
 jobs:
-  deploy:
-    name: Deploy
-    runs-on: ubuntu-latest
+  lint-and-test:
+    name: Lint and Test
     steps:
-      - name: Lint Code Base
-        uses: github/super-linter@v4
-        env:
-          VALIDATE_ALL_CODEBASE: false
-          DEFAULT_BRANCH: "main"
-
-      # - name: Get latest code
-      #   uses: actions/checkout@main
+      - name: Checkout Code
+        uses: actions/checkout@main
 
       - name: Setup Node.js
-        id: setup-node
         uses: actions/setup-node@main
         with:
           node-version-file: "package.json"
 
-      - run: |
+      # - name: Install Dependencies
+      #   run: npm ci --production
+
+      - name: Lint Code Base
+        uses: super-linter/super-linter@main
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: "main"
+
+      # - name: Test Code
+      #   run: npm run test --coverage
+
+      - name: Lint Commit Message
+        uses: wagoid/commitlint-github-action@main
+
+  deploy:
+    name: Deploy
+    needs: lint-and-test
+    if: github.ref == 'refs/heads/main'
+    steps:
+      - run: echo a |
           echo "${{ toJson(vars) }}"
         name: ${{ env.NODE_VERSION }} ${{ env.TEST }}
         env:
           NODE_VERSION: ${{ steps.setup-node.outputs.node-version }}
-
-    env:
-      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
