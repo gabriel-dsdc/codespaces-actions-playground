@@ -33,7 +33,7 @@ jobs:
       #   run: npm run test --coverage
 
       - name: Lint Commit Message
-        uses: wagoid/commitlint-github-action
+        uses: wagoid/commitlint-github-action@master
 
   deploy:
     name: Deploy
