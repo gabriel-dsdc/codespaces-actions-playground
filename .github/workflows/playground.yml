@@ -11,19 +11,25 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
-      - name: Get latest code
-        uses: actions/checkout@main
+      - name: Lint Code Base
+        uses: github/super-linter@v4
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: "main"
 
-      - name: Setup ${{ env.NODE_VERSION }} Node.js
+      # - name: Get latest code
+      #   uses: actions/checkout@main
+
+      - name: Setup Node.js
         id: setup-node
         uses: actions/setup-node@main
         with:
           node-version-file: "package.json"
-        env:
-          NODE_VERSION: ${{ steps.setup-node.outputs.node-version }}
 
       - run: |
           echo "${{ toJson(vars) }}"
+        name: ${{ env.NODE_VERSION }}
 
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      NODE_VERSION: ${{ steps.setup-node.outputs.node-version }}
