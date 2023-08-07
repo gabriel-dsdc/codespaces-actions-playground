@@ -14,16 +14,13 @@ jobs:
       - name: Get latest code
         uses: actions/checkout@main
 
-      - name: Setup ${{ steps.setup-node.outputs.node-version }} Node.js
+      - name: Setup ${NODE_VERSION} Node.js
         id: setup-node
         uses: actions/setup-node@main
         with:
           node-version-file: "package.json"
-
-      - run: |
-          echo ${{ steps.setup-node.outputs.node-version }}
-          echo ${{ toJson(steps.setup-node.outputs) }}
-          echo ${{ toJson(steps.setup-node) }}
+        env:
+          NODE_VERSION: ${{ steps.setup-node.outputs.node-version }}
 
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
