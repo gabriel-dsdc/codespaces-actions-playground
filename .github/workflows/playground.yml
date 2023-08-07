@@ -1,0 +1,36 @@
+name: Deploy on push
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        os: [ubuntu-latest, macos-latest, windows-latest]
+    steps:
+      - name: Get latest code
+        uses: actions/checkout@main
+
+      - name: Lint Code Base
+        uses: super-linter/super-linter@main
+        env:
+          VALIDATE_ALL_CODEBASE: false
+          DEFAULT_BRANCH: "main"
+
+      - name: Setup Node.js ${{ steps.setup-node.outputs.node-version }} ${{ steps.setup-node.outputs }}
+        id: setup-node
+        uses: actions/setup-node@main
+        with:
+          node-version-file: "package.json"
+
+      - name: Install Dependencies
+        run: npm ci
+
+    env:
+      GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
