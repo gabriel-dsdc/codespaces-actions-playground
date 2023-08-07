@@ -11,6 +11,8 @@ jobs:
     name: Deploy
     runs-on: ubuntu-latest
     steps:
+      - env:
+          TEST: ${{ steps.setup-node.outputs.node-version }}
       - name: Lint Code Base
         uses: github/super-linter@v4
         env:
@@ -28,8 +30,9 @@ jobs:
 
       - run: |
           echo "${{ toJson(vars) }}"
-        name: ${{ env.NODE_VERSION }}
+        name: ${{ env.NODE_VERSION }} ${{ env.TEST }}
+        env:
+          NODE_VERSION: ${{ steps.setup-node.outputs.node-version }}
 
     env:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      NODE_VERSION: ${{ steps.setup-node.outputs.node-version }}
