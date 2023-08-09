@@ -29,10 +29,10 @@
       if: github.ref == 'refs/heads/main'
       steps:
         - run: |
-            echo https://git:@github.com/${GITHUB_REPOSITORY}.git
-            echo ${GIT_URL}
+            echo ${GITHUB_REPOSITORY}
+            echo '${GIT_URL}'
           env:
-            GIT_URL: https://git:@github.com/${GITHUB_REPOSITORY}.git
+            GIT_URL: ${GITHUB_REPOSITORY}
         # - name: Build and Deploy with gh-pages
         #   run: |
         #     git remote set-url origin "${GIT_URL}"
