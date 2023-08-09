@@ -39,9 +39,8 @@
             echo "Working variable from variable: $GIT_URL"
             echo ${GITHUB_REPOSITORY}
 
-        # - name: Build and Deploy with gh-pages
-        #   run: |
-        #     git remote set-url origin "${GIT_URL}"
-        #   env:
-        #     GIT_URL: https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+        - name: Build and Deploy with gh-pages
+          run: |
+            git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/\
+            ${GITHUB_REPOSITORY}.git"
   
