@@ -29,8 +29,8 @@
       if: github.ref == 'refs/heads/main'
       steps:
         - run: |
-            echo '${GIT_URL}'
-            echo '${GITHUB_REPOSITORY}'
+            echo ${GIT_URL}
+            echo ${GITHUB_REPOSITORY}
           env:
             GIT_URL: ${GITHUB_REPOSITORY}
         # - name: Build and Deploy with gh-pages
