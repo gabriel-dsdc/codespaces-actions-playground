@@ -5,8 +5,6 @@
       branches: [main]
     pull_request:
       branches: [main]
-  env:
-    GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
   jobs:
     lint-and-test:
       name: Lint and Test
@@ -28,18 +26,20 @@
       needs: lint-and-test
       if: github.ref == 'refs/heads/main'
       steps:
-        - run: |
-            echo "GIT_URL=$GITHUB_REPOSITORY" >> $GITHUB_ENV
-        - run: |
-            echo "EEEEE\
-            AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\
-            BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\
-            CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
-        - run: |
-            echo "Working variable from variable: $GIT_URL"
-            echo ${GITHUB_REPOSITORY}
+        # - run: |
+        #     echo "GIT_URL=$GITHUB_REPOSITORY" >> $GITHUB_ENV
+        # - run: |
+        #     echo "EEEEE\
+        #     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\
+        #     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\
+        #     CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+        # - run: |
+        #     echo "Working variable from variable: $GIT_URL"
+        #     echo ${GITHUB_REPOSITORY}
 
-        - name: Build and Deploy with gh-pages
+        - name: Deploy with gh-pages
           run: |
             git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          env:
+            GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
  
