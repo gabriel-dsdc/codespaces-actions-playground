@@ -28,8 +28,14 @@
       needs: lint-and-test
       if: github.ref == 'refs/heads/main'
       steps:
+        - run: echo "GIT_URL=$GITHUB_REPOSITORY"
         - run: |
-            echo -e ${!GIT_URL}
+            echo EEEEE
+            !AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+            !BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB
+            !CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC
+        - run: |
+            echo ${!GIT_URL}
             echo ${GITHUB_REPOSITORY}
           env:
             GIT_URL: ${GITHUB_REPOSITORY}
