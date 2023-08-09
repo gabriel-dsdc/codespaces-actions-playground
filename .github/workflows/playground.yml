@@ -29,7 +29,7 @@
       if: github.ref == 'refs/heads/main'
       steps:
         - run: |
-            echo "GIT_URL=$HOME/data" >> $GITHUB_ENV
+            echo "GIT_URL=$GITHUB_REPOSITORY" >> $GITHUB_ENV
         - run: |
             echo "EEEEE\
             AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\
