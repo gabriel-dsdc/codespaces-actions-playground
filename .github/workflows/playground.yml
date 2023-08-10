@@ -20,22 +20,12 @@ jobs:
         uses: actions/setup-node@main
         with:
           node-version-file: package.json
-
-          # - run: |
-          #     echo "GIT_URL=$GITHUB_REPOSITORY" >> $GITHUB_ENV
-          # - run: |
-          #     echo "EEEEE\
-          #     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\
-          #     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\
-          #     CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
-          # - run: |
-          #     echo "Working variable from variable: $GIT_URL"
-          #     echo ${GITHUB_REPOSITORY}
-        if: github.ref == 'refs/heads/main'
       - run: ls -a
 
       - name: Deploy with gh-pages
+        if: github.ref == 'refs/heads/main'
         run: |
-          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git
+          git remote set-url origin https://git:${GITHUB_TOKEN}@github.com/\
+          ${GITHUB_REPOSITORY}.git
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
