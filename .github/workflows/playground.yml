@@ -6,8 +6,8 @@ on:
   pull_request:
     branches: [main]
 jobs:
-  lint-and-test:
-    name: Lint and Test
+  deploy:
+    name: Build and Deploy
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Code
@@ -21,22 +21,17 @@ jobs:
         with:
           node-version-file: package.json
 
-  deploy:
-    name: Build and Deploy
-    runs-on: ubuntu-latest
-    needs: lint-and-test
-    if: github.ref == 'refs/heads/main'
-    steps:
-      # - run: |
-      #     echo "GIT_URL=$GITHUB_REPOSITORY" >> $GITHUB_ENV
-      # - run: |
-      #     echo "EEEEE\
-      #     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\
-      #     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\
-      #     CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
-      # - run: |
-      #     echo "Working variable from variable: $GIT_URL"
-      #     echo ${GITHUB_REPOSITORY}
+          # - run: |
+          #     echo "GIT_URL=$GITHUB_REPOSITORY" >> $GITHUB_ENV
+          # - run: |
+          #     echo "EEEEE\
+          #     AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\
+          #     BBBBBBBBBBBBBBBBBBBBBBBBBBBBBB\
+          #     CCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCCC"
+          # - run: |
+          #     echo "Working variable from variable: $GIT_URL"
+          #     echo ${GITHUB_REPOSITORY}
+        if: github.ref == 'refs/heads/main'
       - run: ls -a
 
       - name: Deploy with gh-pages
